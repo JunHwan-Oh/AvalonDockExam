@@ -1,0 +1,108 @@
+﻿<Window x:Class="AvalonDockExam.MainView"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:local="clr-namespace:AvalonDockExam"
+                xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+                xmlns:avalondock="http://schemas.xceed.com/wpf/xaml/avalondock"
+                xmlns:s="clr-namespace:System;assembly=mscorlib"
+                Title="AvalonDock" SizeChanged="Window_SizeChanged">
+
+    <Grid x:Name="_maingrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+               Text=" JHO" FontSize="20"/>
+
+        <StackPanel Grid.Row="1">
+            <!-- Avalon Dock 기본 셋팅 -->
+            <avalondock:DockingManager x:Name="_dockingManager"
+                           AllowMixedOrientation="True"
+                           BorderBrush="Black"
+                           BorderThickness="1" Height="{Binding Model.DockHeight}">
+                <avalondock:DockingManager.DocumentHeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding IconSource}"
+                                     Margin="0,0,4,0" />
+                            <TextBlock Text="{Binding Title}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </avalondock:DockingManager.DocumentHeaderTemplate>
+                
+                
+                <!-- Avalon Dock 객체 선언-->
+                <avalondock:LayoutRoot x:Name="_layoutRoot">
+                    <avalondock:LayoutPanel Orientation="Horizontal">
+                        
+                        <!-- LayoutAnchorablePane 은 모든 Pane 에 접근이 가능 -->
+                        <avalondock:LayoutAnchorablePane DockWidth="200">
+                            <avalondock:LayoutAnchorable ContentId="properties"
+                                     Title="Left Dock"
+                                     CanHide="False"
+                                     CanClose="False"
+                                     AutoHideWidth="240">
+                                <!-- 이 부분에 좌측 Pane 내용을 삽입 -->
+                                <ContentControl Content="{Binding Model.LeftDock_View}"/>
+                                
+                            </avalondock:LayoutAnchorable>
+                        </avalondock:LayoutAnchorablePane>
+
+                        <!-- LayoutDocumentPaneGroup 은 연결된 문서 내에서만 Pane 가능 -->
+                        <avalondock:LayoutDocumentPaneGroup>
+                            <avalondock:LayoutDocumentPane>
+
+                                <avalondock:LayoutDocument ContentId="view1"
+                                     Title="First View"
+                                     CanClose="False">
+                                    <!-- 이 부분에 내부에 들어갈 레이아웃 바인딩
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"-->
+                                    <ContentControl Content="{Binding Model.First_View}"/>
+                                    
+                                </avalondock:LayoutDocument>
+
+                                <avalondock:LayoutDocument ContentId="view2"
+                                     Title="Second View"
+                                     CanClose="False">
+                                    <!-- 이 부분에 내부에 들어갈 레이아웃 바인딩 -->
+                                    <ContentControl Content="{Binding Model.Second_View}"/>
+                                </avalondock:LayoutDocument>
+                                
+                            </avalondock:LayoutDocumentPane>
+                        </avalondock:LayoutDocumentPaneGroup >
+
+                        <!-- LayoutAnchorableGroup은 LayoutAnchorablePane을 묶는 객체 리스트처럼 사용 가능-->
+                        <avalondock:LayoutAnchorablePaneGroup DockWidth="200">
+                            <avalondock:LayoutAnchorablePane>
+                                
+                                <avalondock:LayoutAnchorable ContentId="view3"
+                                       Title="Right Dock 1"
+                                       CanHide="False"
+                                       CanClose="False">
+                                    <!-- 이 부분에 내부에 들어갈 레이아웃 바인딩 -->
+                                    <ContentControl Content="{Binding Model.RightDock_View}"/>
+                                    
+                                </avalondock:LayoutAnchorable>
+
+                                <avalondock:LayoutAnchorable ContentId="view4"
+                                       Title="Right Dock 2"
+                                       CanHide="False"
+                                       CanClose="False">
+                                    <!-- 이 부분에 내부에 들어갈 레이아웃 바인딩 -->
+                                    <ContentControl Content="{Binding Model.RightDock_View2}"/>
+                                    
+                                </avalondock:LayoutAnchorable>
+                                
+                            </avalondock:LayoutAnchorablePane>
+                        </avalondock:LayoutAnchorablePaneGroup>
+                        
+                        
+                    </avalondock:LayoutPanel>
+                </avalondock:LayoutRoot>
+            </avalondock:DockingManager>
+        </StackPanel>
+    </Grid>
+</Window>
